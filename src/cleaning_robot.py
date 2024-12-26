@@ -85,6 +85,16 @@ class CleaningRobot:
                 self.pos_x -= 1
             elif self.heading == self.S:
                 self.pos_y -= 1
+        elif command == self.RIGHT:
+            self.activate_rotation_motor(self.RIGHT)
+            if self.heading == self.N:
+                self.heading = self.E
+            elif self.heading == self.E:
+                self.heading = self.S
+            elif self.heading == self.S:
+                self.heading = self.W
+            elif self.heading == self.W:
+                self.heading = self.N
 
     def obstacle_found(self) -> bool:
         # To be implemented
