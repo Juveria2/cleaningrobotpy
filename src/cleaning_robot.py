@@ -105,6 +105,9 @@ class CleaningRobot:
                 self.heading = self.E
             elif self.heading == self.E:
                 self.heading = self.N
+        else:
+            raise CleaningRobotError
+
     def obstacle_found(self) -> bool:
         # To be implemented
         pass
