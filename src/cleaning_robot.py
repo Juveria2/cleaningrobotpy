@@ -1,5 +1,7 @@
 import time
 
+from sympy import false
+
 DEPLOYMENT = False  # This variable is to understand whether you are deploying on the actual hardware
 
 try:
@@ -81,8 +83,14 @@ class CleaningRobot:
         pass
 
     def manage_cleaning_system(self) -> None:
-        # To be implemented
-        pass
+        charge = self.ibs.get_charge_left()
+        if charge > 10:
+            GPIO.output(self.RECHARGE_LED_PIN, GPIO.LOW)
+            GPIO.output(self.CLEANING_SYSTEM_PIN, GPIO.HIGH)
+            self.cleaning_system_on = True
+            self.recharge_led_on = False
+        else:
+            return false
 
     def activate_wheel_motor(self) -> None:
         """
