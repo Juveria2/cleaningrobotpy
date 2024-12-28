@@ -80,4 +80,17 @@ class TestCleaningRobot(TestCase):
         system.manage_cleaning_system()
         self.assertEqual(system.execute_command(system.FORWARD), "!(1,1,N)")
 
+    @patch('src.cleaning_robot.requests.get')
+    def test_weather_adjustment_on_rain(self, mock_get: Mock):
+        # Mock weather response to simulate rain
+        mock_get.return_value.json.return_value = {
+            "weather": [{"main": "Rain"}]
+        }
+        system = CleaningRobot()
+        system.check_weather_and_adjust_mode()
+        # Check if the robot stops or adjusts behavior for rain
+        self.assertEqual(system.status, "Rain detected. Stopping cleaning.")
+
+
+
 

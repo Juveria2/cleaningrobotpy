@@ -1,5 +1,6 @@
 import time
 
+
 from sympy import false
 
 DEPLOYMENT = False  # This variable is to understand whether you are deploying on the actual hardware
@@ -65,6 +66,7 @@ class CleaningRobot:
 
         self.recharge_led_on = False
         self.cleaning_system_on = False
+
 
     def initialize_robot(self) -> None:
         self.pos_x = 0
@@ -186,6 +188,7 @@ class CleaningRobot:
         GPIO.output(self.BIN2, GPIO.LOW)
         GPIO.output(self.PWMB, GPIO.LOW)
         GPIO.output(self.STBY, GPIO.LOW)
+
 
 
 class CleaningRobotError(Exception):
