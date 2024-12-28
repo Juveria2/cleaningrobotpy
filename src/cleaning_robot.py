@@ -1,5 +1,5 @@
 import time
-
+import requests
 
 from sympy import false
 
@@ -66,6 +66,17 @@ class CleaningRobot:
 
         self.recharge_led_on = False
         self.cleaning_system_on = False
+        self.status = "Ready"
+
+    def check_weather_and_adjust_mode(self):
+        weather_data = self.get_weather()
+        if weather_data['weather'][0]['main'] == "Rain":
+            self.status = "Rain detected. Stopping cleaning."
+            # Logic to stop the robot or adjust behavior.
+
+    def get_weather(self):
+        response = requests.get("https://api.openweathermap.org/data/2.5/weather?q=Fisciano,IT&appid=939778a56a28085695d673d66ac26933")
+        return response.json()
 
 
     def initialize_robot(self) -> None:
