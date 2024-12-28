@@ -69,14 +69,19 @@ class CleaningRobot:
         self.status = "Ready"
 
     def check_weather_and_adjust_mode(self):
-        weather_data = self.get_weather()
-        if weather_data['weather'][0]['main'] == "Rain":
+        weather_data = self.get_weather_data()
+        if weather_data and weather_data['weather'][0]['main'] == "Rain":
             self.status = "Rain detected. Stopping cleaning."
             # Logic to stop the robot or adjust behavior.
 
-    def get_weather(self):
-        response = requests.get("https://api.openweathermap.org/data/2.5/weather?q=Fisciano,IT&appid=939778a56a28085695d673d66ac26933")
-        return response.json()
+    def get_weather_data(self, city="Fisciano,IT"):
+        try:
+            response = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q=Fisciano,IT&appid=939778a56a28085695d673d66ac26933")
+            response.raise_for_status()  # Raise an HTTPError for bad responses (4xx and 5xx)
+            return response.json()
+        except requests.exceptions.RequestException as e:
+            self.status = f"Weather data fetch failed: {e}"
+            return None
 
 
     def initialize_robot(self) -> None:
